@@ -1,0 +1,67 @@
+// const deleteBook = (idToDelete) => {
+//     // Filter DataList untuk membuat newList yang tidak termasuk objek dengan id yang ingin dihapus
+//     DataList = DataList.filter(item => !(item.id && item.id === idToDelete));
+
+//     console.log(`Berhasil menghapus buku dengan id ${idToDelete}`);
+//     console.log(DataList);
+
+//     // Menyimpan setiap data dengan kunci yang berbeda
+//     localStorage.setItem('data', JSON.stringify(DataList));
+
+//     window.location.reload();
+
+// }
+
+// const allData = () => {
+//     // Ambil elemen section dengan id unfinish
+//     var sectionElementUnfinish = document.querySelector('#unfinish');
+//     var sectionElementFinish = document.querySelector('#finish');
+
+//     console.log(DataList);
+
+//     // Definisikan variabel untuk menampung konten HTML
+//     var newHTMLUnfinish = '';
+//     var newHTMLFinish = '';
+
+//     // Loop melalui DataList dan tambahkan konten untuk setiap buku
+//     for (var i = 0; i < DataList.length; i++) {
+//         if (DataList[i].isComplete == 0) {
+//             newHTMLUnfinish += `
+//                 <div class="mb-4">
+//                     <div id="incompleteBookList" data-testid="incompleteBookList" class="bg-gray-200 shadow-sm rounded-md p-4">
+//                         <h3 data-testid="bookItemTitle" class="text-lg font-semibold">${DataList[i].Judul}</h3>
+//                         <p data-testid="bookItemAuthor" class="text-sm text-gray-600">Penulis: ${DataList[i].Penulis}</p>
+//                         <p data-testid="bookItemYear" class="text-sm text-gray-600">Tahun: ${DataList[i].Tahun}</p>
+//                         <div class="mt-4 flex space-x-2">
+//                             <button data-testid="bookItemIsCompleteButton" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Selesai dibaca</button>
+//                             <button data-testid="bookItemDeleteButton" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600" onclick="deleteBook(${DataList[i].id})">Hapus Buku</button>
+//                             <button data-testid="bookItemEditButton" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600">Edit Buku</button>
+//                         </div>
+//                     </div>
+//                 </div>
+//             `;
+//         } else {
+//             newHTMLFinish += `
+//                 <div class="mb-4">
+//                     <div id="incompleteBookList" data-testid="incompleteBookList" class="bg-gray-200 shadow-sm rounded-md p-4">
+//                         <h3 data-testid="bookItemTitle" class="text-lg font-semibold">${DataList[i].Judul}</h3>
+//                         <p data-testid="bookItemAuthor" class="text-sm text-gray-600">Penulis: ${DataList[i].Penulis}</p>
+//                         <p data-testid="bookItemYear" class="text-sm text-gray-600">Tahun: ${DataList[i].Tahun}</p>
+//                         <div class="mt-4 flex space-x-2">
+//                             <button data-testid="bookItemIsCompleteButton" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Selesai dibaca</button>
+//                             <button data-testid="bookItemDeleteButton" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Hapus Buku</button>
+//                             <button data-testid="bookItemEditButton" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600">Edit Buku</button>
+//                         </div>
+//                     </div>
+//                 </div>
+//             `;
+//         }
+//     }
+
+//     // Setel innerHTML dari sectionElement dengan konten HTML baru
+//     sectionElementUnfinish.innerHTML = newHTMLUnfinish;
+//     sectionElementFinish.innerHTML = newHTMLFinish;
+// }
+
+// // Starter
+// allData();
