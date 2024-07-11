@@ -1,18 +1,33 @@
-if (typeof (Storage) !== "undefined") {
-    console.log("localStorage tersedia.");
-} else {
-    console.log("Maaf, localStorage tidak tersedia di browser ini.");
-}
-
 let DataList = [];
 
-if (localStorage.getItem('data')) {
-    DataList = JSON.parse(localStorage.getItem('data'));
-}
+const fetchData = async () => {
+    try {
+        const response = await fetch('/data');
+        if (!response.ok) throw new Error('Network response was not ok');
+        DataList = await response.json();
+        renderAllBooks();
+    } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+    }
+};
 
-var form = document.getElementById('bookForm');
+const saveData = async (data) => {
+    try {
+        const response = await fetch('/data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) throw new Error('Network response was not ok');
+        console.log(await response.text());
+    } catch (error) {
+        console.error('There has been a problem with your save operation:', error);
+    }
+};
 
-form.addEventListener('submit', function (event) {
+const handleFormSubmit = (event) => {
     event.preventDefault();
 
     let title = document.getElementById('bookFormTitle').value;
@@ -21,7 +36,7 @@ form.addEventListener('submit', function (event) {
     let isComplete = document.getElementById('bookFormIsComplete').checked;
     let id = new Date().getTime();
 
-    let data = {
+    let newBook = {
         id: id,
         Judul: title,
         Penulis: author,
@@ -29,31 +44,19 @@ form.addEventListener('submit', function (event) {
         isComplete: isComplete
     };
 
-    DataList.push(data);
-    localStorage.setItem('data', JSON.stringify(DataList));
-
-    addBookToDOM(data);
-
-    form.reset();
+    DataList.push(newBook);
+    saveData(DataList); // Save the updated data list to the server
+    addBookToDOM(newBook);
+    event.target.reset();
     document.querySelector('#bookFormSubmit span').textContent = 'Belum selesai dibaca';
-});
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    const checkbox = document.getElementById('bookFormIsComplete');
-    const spanElement = document.querySelector('#bookFormSubmit span');
-
-    checkbox.addEventListener('change', () => {
-        spanElement.textContent = checkbox.checked ? 'Selesai dibaca' : 'Belum selesai dibaca';
-    });
-});
+};
 
 const deleteBook = (idToDelete) => {
     const userConfirmed = confirm(`Apakah Anda yakin ingin menghapus buku dengan id ${idToDelete}?`);
 
     if (userConfirmed) {
         DataList = DataList.filter(item => item.id !== idToDelete);
-        localStorage.setItem('data', JSON.stringify(DataList));
-
+        saveData(DataList); // Save the updated data list to the server
         document.getElementById(`book-${idToDelete}`).remove();
     }
 };
@@ -97,8 +100,7 @@ const editBook = (idToEdit) => {
             bookToEdit.Penulis = newAuthor;
             bookToEdit.Tahun = newYear;
 
-            localStorage.setItem('data', JSON.stringify(DataList));
-
+            saveData(DataList); // Save the updated data list to the server
             updateBookInDOM(bookToEdit);
 
             Swal.fire({
@@ -127,7 +129,7 @@ const updatedBook = (idToUpdate) => {
     bookToUpdate.isComplete = !bookToUpdate.isComplete;
     updateBookInDOM(bookToUpdate);
 
-    localStorage.setItem('data', JSON.stringify(DataList));
+    saveData(DataList); // Save the updated data list to the server
 };
 
 const addBookToDOM = (book) => {
@@ -152,22 +154,17 @@ const addBookToDOM = (book) => {
 
 const updateBookInDOM = (book) => {
     const bookElement = document.getElementById(`book-${book.id}`);
-    const section = book.isComplete ? document.getElementById('finish') : document.getElementById('unfinish');
     bookElement.remove();
     addBookToDOM(book);
 };
 
-const allData = () => {
+const renderAllBooks = () => {
     DataList.forEach(book => {
         addBookToDOM(book);
     });
 };
 
-allData();
-
-const searchForm = document.getElementById('searchBook');
-
-searchForm.addEventListener('submit', function (event) {
+const handleSearch = (event) => {
     event.preventDefault();
 
     let searchTitle = document.getElementById('searchBookTitle').value.toLowerCase();
@@ -177,7 +174,6 @@ searchForm.addEventListener('submit', function (event) {
         var sectionElementUnfinish = document.querySelector('#unfinish');
         var sectionElementFinish = document.querySelector('#finish');
 
-        // Clear the content of both elements
         sectionElementUnfinish.innerHTML = '';
         sectionElementFinish.innerHTML = '';
 
@@ -187,4 +183,24 @@ searchForm.addEventListener('submit', function (event) {
     } else {
         window.location.reload();
     }
+};
+
+const setupEventListeners = () => {
+    const form = document.getElementById('bookForm');
+    form.addEventListener('submit', handleFormSubmit);
+
+    const searchForm = document.getElementById('searchBook');
+    searchForm.addEventListener('submit', handleSearch);
+
+    const checkbox = document.getElementById('bookFormIsComplete');
+    const spanElement = document.querySelector('#bookFormSubmit span');
+
+    checkbox.addEventListener('change', () => {
+        spanElement.textContent = checkbox.checked ? 'Selesai dibaca' : 'Belum selesai dibaca';
+    });
+};
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    fetchData();
+    setupEventListeners();
 });
