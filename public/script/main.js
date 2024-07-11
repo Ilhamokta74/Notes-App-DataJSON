@@ -51,8 +51,8 @@ const handleFormSubmit = (event) => {
     document.querySelector('#bookFormSubmit span').textContent = 'Belum selesai dibaca';
 };
 
-const deleteBook = (idToDelete) => {
-    const userConfirmed = confirm(`Apakah Anda yakin ingin menghapus buku dengan id ${idToDelete}?`);
+const deleteBook = (idToDelete, Judul) => {
+    const userConfirmed = confirm(`Apakah Anda yakin ingin menghapus buku dengan Judul ${Judul} ?`);
 
     if (userConfirmed) {
         DataList = DataList.filter(item => item.id !== idToDelete);
@@ -145,7 +145,7 @@ const addBookToDOM = (book) => {
             <div class="mt-4 flex space-x-2">
                 <button class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600" onclick="updatedBook(${book.id})">${book.isComplete ? 'Belum Selesai dibaca' : 'Selesai dibaca'}</button>
                 <button class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600" onclick="editBook(${book.id})">Edit Buku</button>
-                <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600" onclick="deleteBook(${book.id})">Hapus Buku</button>
+                <button class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600" onclick="deleteBook(${book.id}, '${book.Judul}')">Hapus Buku</button>
             </div>
         </div>
     `;
