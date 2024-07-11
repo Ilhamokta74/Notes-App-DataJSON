@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar Catatan</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Daftar Catatan</h1>
+    <div id="notesList"></div>
+    <hr>
+    <h2>Formulir Tambah Catatan</h2>
+    <form id="addNoteForm">
+      <label for="noteTitle">Judul:</label><br>
+      <input type="text" id="noteTitle" name="noteTitle" required><br>
+      <label for="noteBody">Isi:</label><br>
+      <textarea id="noteBody" name="noteBody" rows="4" required></textarea><br>
+      <button type="submit">Tambah Catatan</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
