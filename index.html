@@ -1,25 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notes App</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notes App</title>
+
+  <!-- Import script -->
+  <script defer src="./script/main.js"></script>
+
+  <!-- Import custom CSS -->
+  <link href="./style.css" rel="stylesheet">
 </head>
+
 <body>
-    <div class="container">
-        <h2>Formulir Tambah Catatan</h2>
-        <form id="noteForm">
-            <div class="form-group">
-                <label for="noteTitle">Judul:</label>
-                <input type="text" id="noteTitle" name="noteTitle" required>
-            </div>
-            <div class="form-group">
-                <label for="noteBody">Isi:</label>
-                <textarea id="noteBody" name="noteBody" rows="5" required></textarea>
-            </div>
-            <button type="submit">Simpan Catatan</button>
-        </form>
+  <header>
+    <h1>Notes App</h1>
+  </header>
+
+  <main>
+    <div>
+      <h1>Tambah Catatan Baru</h1>
+      <book-form></book-form>
     </div>
+
+    <div>
+      <h1>Daftar Catatan</h1>
+    </div>
+  </main>
+
+  <div class="book-list">
+    
+  </div>
+
+  <script src="./custom-element/catatan.js"></script>
+  <script src="./custom-element/form.js"></script>
 </body>
+
 </html>
